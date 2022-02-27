@@ -1,0 +1,141 @@
+#imports 
+import string
+
+# setting up master game board
+word = "apple"
+word_gamebord = ["-" for i in range(len(word))]
+man =   """
+            _________
+            |       |
+            |       
+            |
+            |
+            |       
+            |
+        """
+#setting up list of posible letters
+list_posible_letters = ["a", "b", "c", "d", "e", "f","g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q","r", "s", "t", "u", "v", "w", "x", "y", "z"]
+list_posible_letters_joined = " ".join(list_posible_letters)
+    
+num_guess = 0
+# fixating the ammount of guess attmeps you have 
+while num_guess < 7:
+    
+    # Getting imput for letter 
+    letter_guessed = input("Enter letter from list: " + list_posible_letters_joined)
+    
+    # seeing if letter is in the word
+    if letter_guessed in word:
+        
+        #matching the letter to the correct position
+        for letter in word:
+            if letter == letter_guessed:
+                
+                # finding if letter occurs more than once in a word
+                index = 0
+                letter_occurence = 0
+                while index < len(word):
+                    if letter_guessed == word[index]:
+                        letter_occurence += 1
+                    index +=1
+                
+                #adding letter to game board with single occurance
+                if letter_occurence == 1:
+                    letter_position_in_word = word.find(letter_guessed)
+                    word_gamebord[letter_position_in_word] = letter_guessed
+                    
+                    #removing letter from list of letter
+                    #letter_position_in_list = list_posible_letters.index(letter_guessed)
+                    #list_posible_letters[letter_position_in_list] = " "
+                    #print(letter_position_in_list)
+                
+                #adding letter to game board with multiple occurance
+                else:
+                    multiple_letter_position = []
+                    index_2 = 0
+                    while index_2 < len(word):
+                        if letter_guessed == word[index_2]:
+                            multiple_letter_position.append(index_2)
+                        index_2 +=1
+                    for position in multiple_letter_position:
+                        word_gamebord[position] = letter_guessed
+                    #letter_position_in_list = list_posible_letters.index(letter_guessed)
+                    #list_posible_letters[letter_position_in_list] = "-"
+                    #print(letter_position_in_list)
+
+    else:
+        num_guess +=1
+        #letter_position_in_list = list_posible_letters.index(letter_guessed)
+        #list_posible_letters[letter_position_in_list] = "-"
+        #print(letter_position_in_list)
+        if num_guess == 1:
+            man =  """
+            _________
+            |       |
+            |       O
+            |
+            |
+            |       
+            |
+            """
+        elif num_guess == 2:
+            man =    """
+            _________
+            |       |
+            |       O
+            |       |
+            |
+            |       
+            |
+            """
+        elif num_guess == 3:
+            man = """
+            _________
+            |       |
+            |       O
+            |      \|/
+            |       
+            |       
+            |
+            """
+        elif num_guess == 4:
+            man = """
+            _________
+            |       |
+            |       O
+            |      \|/
+            |       |       
+            |       
+            |
+            """
+        elif num_guess == 5:
+            man = """
+            _________
+            |       |
+            |       O
+            |      \|/
+            |       |       
+            |        \
+            |
+            """
+        elif num_guess == 6:
+            man = """
+            _________
+            |       |
+            |       O
+            |      \|/
+            |       |       
+            |      / \
+            |
+            """
+            print("Sorry you lost the game")
+            break
+
+    if "".join(word_gamebord) == word:
+        print("You Won!!")
+        print(man)
+        print(word_gamebord)
+        break
+    print(man)
+    print(word_gamebord)
+    print("-" * 50)
